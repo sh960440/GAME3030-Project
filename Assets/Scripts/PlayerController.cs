@@ -16,29 +16,23 @@ public class PlayerController : MonoBehaviour
 {
     // Movement and rotation
     public float moveSpeed;
-    [SerializeField] private float rotStep = 10.0f;
+    [SerializeField] private float rotStep = 1.0f;
     private Vector3 moveDirection;
     private Quaternion destRot;
     public CharacterController controller;
 
-    // Work spots
+    // Work spots interaction
     public WorkSpot workSpot;
     public SpotType facingSpot = SpotType.NONE;
 
     // Pick/Drop
-    public GameObject holdingPosition;
+    public Transform holdingPosition;
     public Objs holdingObj = Objs.NONE;
     [SerializeField] private GameObject[] items;
-    //private bool isHolding = false;
     
-
-    void Awake()
-    {
-        facingSpot = SpotType.NONE;
-    }
-
     void Start()
     {
+        facingSpot = SpotType.NONE;
         controller = GetComponent<CharacterController>();
     }
 
@@ -54,59 +48,113 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown("f"))
         {
-            //Debug.Log(facingSpot);
-
+            // 假如手上沒東西
             if (holdingObj == Objs.NONE)
             {
+                // 拿起前面的東西
                 switch (facingSpot)
                 {
-                    case SpotType.NONE:
-                        
-                        break;
                     case SpotType.WORKAREA:
-                        
+                        SpawnItemOnHands(workSpot.itemOnThis);
+                        workSpot.RemoveItemOnTop();
                         break;
                     case SpotType.MEAT:
-                        holdingPosition = Instantiate(items[0], holdingPosition.GetComponent<Transform>().position, Quaternion.identity, GetComponent<Transform>());
-                        holdingObj = Objs.RAW_STEAK;
+                        SpawnItemOnHands(Objs.RAW_STEAK);
                         break;
                     case SpotType.PLATES:
-                        holdingPosition = Instantiate(items[1], holdingPosition.GetComponent<Transform>().position, Quaternion.identity, GetComponent<Transform>());
-                        holdingObj = Objs.PLATE;
+                        SpawnItemOnHands(Objs.PLATE);
                         break;
-                    default:
+                    case SpotType.STOVE:
+                        FindObjectOfType<StoveBehavior>().StopAllCoroutines();
+                        switch (FindObjectOfType<StoveBehavior>().itemOnStove)
+                        {
+                            case Objs.RAW_STEAK:
+                                SpawnItemOnHands(Objs.RAW_STEAK);
+                                FindObjectOfType<StoveBehavior>().RemoveItemOnTop();
+                                break;
+                            case Objs.COOKED_STEAK:
+                                SpawnItemOnHands(Objs.COOKED_STEAK);
+                                FindObjectOfType<StoveBehavior>().RemoveItemOnTop();
+                                break;
+                            case Objs.OVERCOOKED_STEAK:
+                                SpawnItemOnHands(Objs.OVERCOOKED_STEAK);
+                                FindObjectOfType<StoveBehavior>().RemoveItemOnTop();
+                                break;
+                        }
                         break;
                 }
             }
+            // 假如手上有東西
             else
             {
-                if (workSpot)
+                if (facingSpot == SpotType.WORKAREA)
                 {
-                    switch (holdingObj)
+                    if (workSpot.itemOnThis == Objs.PLATE)
                     {
-                        case Objs.PLATE:
-                            workSpot.itemPosition = Instantiate(items[1], workSpot.itemPosition.GetComponent<Transform>().position, Quaternion.identity, workSpot.itemPosition.GetComponent<Transform>());
-                            //Destroy(holdingPosition);
-                            Destroy(GetComponentInChildren<Plate>().gameObject);
-                            holdingObj = Objs.NONE;
-                            break;
-                        case Objs.RAW_STEAK:
-                            
-                            break;
-                        case Objs.COOKED_STEAK:
-
-                            break;
-
-                        default:
-                            break;
+                        switch (holdingObj)
+                        {
+                            case Objs.RAW_STEAK:
+                                workSpot.RemoveItemOnTop();
+                                RemoveItemOnHands();
+                                workSpot.SpawnObj(Objs.RAW_STEAK_IN_PLATE);
+                                break;
+                            case Objs.COOKED_STEAK:
+                                workSpot.RemoveItemOnTop();
+                                RemoveItemOnHands();
+                                workSpot.SpawnObj(Objs.COOKED_STEAK_IN_PLATE);
+                                break;
+                            case Objs.OVERCOOKED_STEAK:
+                                workSpot.RemoveItemOnTop();
+                                RemoveItemOnHands();
+                                workSpot.SpawnObj(Objs.OVERCOOKED_STEAK_IN_PLATE);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        workSpot.SpawnObj(holdingObj);
+                        RemoveItemOnHands();
+                    }
+                }
+                else if (facingSpot == SpotType.STOVE)
+                {
+                    if (holdingObj == Objs.RAW_STEAK || holdingObj == Objs.COOKED_STEAK || holdingObj == Objs.OVERCOOKED_STEAK)
+                    {
+                        RemoveItemOnHands();
+                        FindObjectOfType<StoveBehavior>().StartCoroutine("StartCookingRawSteak");
+                    }
+                }
+                else if (facingSpot == SpotType.DELIVERY)
+                {
+                    if (holdingObj == Objs.COOKED_STEAK_IN_PLATE)
+                    {
+                        RemoveItemOnHands();
+                    }
+                }
+                else if (facingSpot == SpotType.TRASH)
+                {
+                    if (holdingObj != Objs.NONE)
+                    {
+                        RemoveItemOnHands();
                     }
                 }
             }
-            
-            if (Input.GetKeyDown("g"))
-            {
-
-            }
         }
+        if (Input.GetKeyDown("g"))
+        {
+            
+        }
+    }
+
+    void SpawnItemOnHands(Objs obj)
+    {
+        holdingObj = obj;
+        GameObject item = Instantiate(items[(int)obj], holdingPosition);
+    }
+
+    void RemoveItemOnHands()
+    {
+        Destroy(holdingPosition.GetChild(0).gameObject);
+        holdingObj = Objs.NONE;
     }
 }

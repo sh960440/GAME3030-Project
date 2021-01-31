@@ -110,7 +110,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  itemPosition: {fileID: 8452218962962877385}
+  itemPosition: {fileID: 6591390553324845919}
+  items:
+  - {fileID: 4688602768934414212, guid: 6c9f83eb2f508b04999f888ab9418758, type: 3}
+  - {fileID: 1000011546679732, guid: c6087de49eeb0e943ad0ba475894db38, type: 3}
+  - {fileID: 1000012081886716, guid: 219e4980fe1c15b49af006e0633e7616, type: 3}
+  - {fileID: 1000012081886716, guid: 7f1c9674e5f006b4fbd85aaee60f6f0c, type: 3}
+  - {fileID: 6118478886325433506, guid: e86b57db86cffba41a576b5365992933, type: 3}
+  - {fileID: 9001925025793198021, guid: 4287acb77b872f946982a3bc1c7d2d6d, type: 3}
+  - {fileID: 2953657267565218251, guid: f29039eb745647a4890674dd00be7a23, type: 3}
+  itemOnThis: 7
   originalMaterial: {fileID: 0}
   brightMaterial: {fileID: 2100000, guid: a86b31eaf9e90aa469dc3fd51f7ef1d4, type: 2}
 --- !u!1 &8452218962962877385
@@ -137,7 +146,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8452218962962877385}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.539, z: 0}
+  m_LocalPosition: {x: 0, y: 0.493, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7868188449774492073}
