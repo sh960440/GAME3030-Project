@@ -14,6 +14,12 @@ public enum SpotType
 }
 public class PlayerController : MonoBehaviour
 {
+    // 之後刪掉
+    public void Exit()
+    {
+        Application.Quit();
+    }
+    
     // Movement and rotation
     public float moveSpeed;
     [SerializeField] private float rotStep = 1.0f;
