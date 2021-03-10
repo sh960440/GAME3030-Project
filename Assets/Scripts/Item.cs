@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Objs
+public enum Item
 {
     PLATE = 0,
     RAW_STEAK = 1,
@@ -12,10 +12,10 @@ public enum Objs
     COOKED_STEAK_IP = 5,
     OVERCOOKED_STEAK_IP = 6,
     RAW_FRIES = 7,
-    COOCKED_FRIES = 8,
+    COOKED_FRIES = 8,
     OVERCOOKED_FRIES = 9,
     RAW_FRIES_IP = 10,
-    COOCKED_FRIES_IP = 11,
+    COOKED_FRIES_IP = 11,
     OVERCOOKED_FRIES_IP = 12,
     NONE
 }

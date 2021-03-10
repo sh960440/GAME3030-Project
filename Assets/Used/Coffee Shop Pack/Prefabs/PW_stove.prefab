@@ -41,7 +41,6 @@ GameObject:
   - component: {fileID: 4312602451627968}
   - component: {fileID: 33058910585045560}
   - component: {fileID: 23007816680350766}
-  - component: {fileID: 64386438487964952}
   m_Layer: 0
   m_Name: button
   m_TagString: Stove
@@ -112,20 +111,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64386438487964952
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1123732520623154}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300006, guid: 9f0519225c65144c0b637b15dda857c8, type: 3}
 --- !u!1 &1284846768158662
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,6 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4198406258042436}
   - component: {fileID: 1240769312}
+  - component: {fileID: 836440811}
   m_Layer: 0
   m_Name: PW_stove
   m_TagString: Stove
@@ -181,7 +167,20 @@ MonoBehaviour:
   - {fileID: 1000011546679732, guid: c6087de49eeb0e943ad0ba475894db38, type: 3}
   - {fileID: 1000012081886716, guid: 219e4980fe1c15b49af006e0633e7616, type: 3}
   - {fileID: 1000012081886716, guid: 7f1c9674e5f006b4fbd85aaee60f6f0c, type: 3}
-  itemOnStove: 7
+  itemOnStove: 13
+--- !u!65 &836440811
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284846768158662}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2310336, y: 1.5208019, z: 1.2271531}
+  m_Center: {x: 0.0124765225, y: 0.65155333, z: -0.007947564}
 --- !u!1 &1321277311016920
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,7 +272,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4229718255985650}
-  - component: {fileID: 64820426076795924}
   m_Layer: 0
   m_Name: door
   m_TagString: Stove
@@ -298,20 +296,6 @@ Transform:
   m_Father: {fileID: 4198406258042436}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &64820426076795924
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1545490986122390}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &1592863478741760
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,7 +388,6 @@ GameObject:
   - component: {fileID: 4884821230895904}
   - component: {fileID: 33275087485066780}
   - component: {fileID: 23133601011621178}
-  - component: {fileID: 64993402296264310}
   m_Layer: 0
   m_Name: black
   m_TagString: Stove
@@ -475,20 +458,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64993402296264310
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1683718544120972}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300008, guid: 9f0519225c65144c0b637b15dda857c8, type: 3}
 --- !u!1 &1808223833659134
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +550,6 @@ GameObject:
   - component: {fileID: 4183783919290504}
   - component: {fileID: 33872604957251250}
   - component: {fileID: 23208549078437852}
-  - component: {fileID: 64740098240457510}
   m_Layer: 0
   m_Name: stove 1
   m_TagString: Stove
@@ -652,20 +620,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64740098240457510
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1832458580578730}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: 9f0519225c65144c0b637b15dda857c8, type: 3}
 --- !u!1001 &1824013348949571077
 PrefabInstance:
   m_ObjectHideFlags: 0

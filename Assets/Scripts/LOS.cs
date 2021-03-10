@@ -11,22 +11,40 @@ public class LOS : MonoBehaviour
         switch(other.tag)
         {
             case "WorkSpot":
-                player.facingSpot = SpotType.WORKAREA;
+                player.facingSpotType = SpotType.WORKAREA;
                 break;
             case "DeliveryPlace":
-                player.facingSpot = SpotType.DELIVERY;
+                player.facingSpotType = SpotType.DELIVERY;
                 break;
             case "PlateStack":
-                player.facingSpot = SpotType.PLATES;
+                player.facingSpotType = SpotType.PLATES;
                 break;
             case "TrashBox":
-                player.facingSpot = SpotType.TRASH;
+                player.facingSpotType = SpotType.TRASH;
                 break;
             case "Stove":
-                player.facingSpot = SpotType.STOVE;
+                player.facingSpotType = SpotType.STOVE;
                 break;
             case "Meat":
-                player.facingSpot = SpotType.MEAT;
+                player.facingSpotType = SpotType.MEAT;
+                break;
+            case "Fries":
+                player.facingSpotType = SpotType.FRIES;
+                break;
+            case "Fryer":
+                player.facingSpotType = SpotType.FRYER;
+                break;
+            case "Microwave":
+                //player.facingSpotType = SpotType.FRIES;
+                break;
+            case "Chicken":
+                //player.facingSpotType = SpotType.FRIES;
+                break;
+            case "Cups":
+                //player.facingSpotType = SpotType.FRIES;
+                break;
+            case "Drink":
+                //player.facingSpotType = SpotType.FRIES;
                 break;
             default:
                 break;
@@ -35,9 +53,20 @@ public class LOS : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("WorkSpot") || other.CompareTag("DeliveryPlace") || other.CompareTag("PlateStack") || other.CompareTag("TrashBox") || other.CompareTag("Stove") || other.CompareTag("Meat"))
+        if (other.CompareTag("WorkSpot") || 
+            other.CompareTag("DeliveryPlace") || 
+            other.CompareTag("PlateStack") || 
+            other.CompareTag("TrashBox") || 
+            other.CompareTag("Stove") || 
+            other.CompareTag("Meat") ||
+            other.CompareTag("Fries") ||
+            other.CompareTag("Fryer") ||
+            other.CompareTag("Microwave") ||
+            other.CompareTag("Chicken") ||
+            other.CompareTag("Cups") ||
+            other.CompareTag("Drink"))
         {
-            player.facingSpot = SpotType.NONE;
+            player.facingSpotType = SpotType.NONE;
         }
     }
 }

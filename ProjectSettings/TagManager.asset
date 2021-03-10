@@ -12,6 +12,11 @@ TagManager:
   - Stove
   - Meat
   - Fries
+  - Fryer
+  - Microwave
+  - Chicken
+  - Cups
+  - Drink
   layers:
   - Default
   - TransparentFX

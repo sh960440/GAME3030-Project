@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   itemPosition: {fileID: 6591390553324845919}
-  items:
+  itemPrefabs:
   - {fileID: 4688602768934414212, guid: 6c9f83eb2f508b04999f888ab9418758, type: 3}
   - {fileID: 1000011546679732, guid: c6087de49eeb0e943ad0ba475894db38, type: 3}
   - {fileID: 1000012081886716, guid: 219e4980fe1c15b49af006e0633e7616, type: 3}
@@ -119,7 +119,13 @@ MonoBehaviour:
   - {fileID: 6118478886325433506, guid: e86b57db86cffba41a576b5365992933, type: 3}
   - {fileID: 9001925025793198021, guid: 4287acb77b872f946982a3bc1c7d2d6d, type: 3}
   - {fileID: 2953657267565218251, guid: f29039eb745647a4890674dd00be7a23, type: 3}
-  itemOnThis: 7
+  - {fileID: 7981170868454165132, guid: 899101f339e594e47a082e20fe638e21, type: 3}
+  - {fileID: 1000012400448258, guid: 9b21be590f33e0d4ba19fec73ce555da, type: 3}
+  - {fileID: 6200911745086626293, guid: 11d4aa1ea7399004abc44bb86cb49462, type: 3}
+  - {fileID: 363841076705983103, guid: f0bfbbf60812a3141884a7e37d64725c, type: 3}
+  - {fileID: 7229945131845354379, guid: 8b7860be058cfc94297d5909546ea781, type: 3}
+  - {fileID: 2626736309320946981, guid: 84f0a0f13af8b86489b5f4db636a271b, type: 3}
+  itemOnSpot: 13
   originalMaterial: {fileID: 0}
   brightMaterial: {fileID: 2100000, guid: a86b31eaf9e90aa469dc3fd51f7ef1d4, type: 2}
 --- !u!1 &8452218962962877385

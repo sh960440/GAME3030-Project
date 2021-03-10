@@ -6,13 +6,14 @@ public class WorkSpot : MonoBehaviour
 {
     public PlayerController player;
     public Transform itemPosition;
-    public GameObject[] items;
-    public Objs itemOnThis = Objs.NONE;
+    public GameObject[] itemPrefabs;
+    public Item itemOnSpot = Item.NONE;
     [SerializeField] private Material originalMaterial;
     [SerializeField] private Material brightMaterial;
 
     void Start()
     {
+        itemOnSpot = Item.NONE;
         originalMaterial = GetComponent<MeshRenderer>().material;
     }
 
@@ -34,39 +35,15 @@ public class WorkSpot : MonoBehaviour
         }
     }
 
-    public void SpawnObj(Objs obj)
+    public void SpawnObj(Item obj)
     {
-        itemOnThis = obj;
-
-        switch (obj)
-        {
-            case Objs.PLATE:
-                GameObject plate = Instantiate(items[0], itemPosition);
-                break;
-            case Objs.RAW_STEAK:
-                GameObject rawSteak = Instantiate(items[1], itemPosition);
-                break;
-            case Objs.COOKED_STEAK:
-                GameObject cookedSteak = Instantiate(items[2], itemPosition);
-                break;
-            case Objs.OVERCOOKED_STEAK:
-                GameObject overcookedSteak = Instantiate(items[3], itemPosition);
-                break;
-            case Objs.RAW_STEAK_IP:
-                GameObject rawSteakPlate = Instantiate(items[4], itemPosition);
-                break;
-            case Objs.COOKED_STEAK_IP:
-                GameObject cookedSteakPlate = Instantiate(items[5], itemPosition);
-                break;
-            case Objs.OVERCOOKED_STEAK_IP:
-                GameObject overcookedSteakPlate = Instantiate(items[6], itemPosition);
-                break;
-        }
+        itemOnSpot = obj;
+        GameObject plate = Instantiate(itemPrefabs[(int)obj], itemPosition);
     }
 
     public void RemoveItemOnTop()
     {
         Destroy(itemPosition.GetChild(0).gameObject);
-        itemOnThis = Objs.NONE;
+        itemOnSpot = Item.NONE;
     }
 }
