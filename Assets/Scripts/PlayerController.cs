@@ -10,7 +10,9 @@ public enum SpotType
     PLATES,
     TRASH,
     STOVE,
-    MEAT
+    MEAT,
+    FRYER,
+    FRIES
 }
 public class PlayerController : MonoBehaviour
 {
@@ -102,17 +104,17 @@ public class PlayerController : MonoBehaviour
                             case Objs.RAW_STEAK:
                                 workSpot.RemoveItemOnTop();
                                 RemoveItemOnHands();
-                                workSpot.SpawnObj(Objs.RAW_STEAK_IN_PLATE);
+                                workSpot.SpawnObj(Objs.RAW_STEAK_IP);
                                 break;
                             case Objs.COOKED_STEAK:
                                 workSpot.RemoveItemOnTop();
                                 RemoveItemOnHands();
-                                workSpot.SpawnObj(Objs.COOKED_STEAK_IN_PLATE);
+                                workSpot.SpawnObj(Objs.COOKED_STEAK_IP);
                                 break;
                             case Objs.OVERCOOKED_STEAK:
                                 workSpot.RemoveItemOnTop();
                                 RemoveItemOnHands();
-                                workSpot.SpawnObj(Objs.OVERCOOKED_STEAK_IN_PLATE);
+                                workSpot.SpawnObj(Objs.OVERCOOKED_STEAK_IP);
                                 break;
                         }
                     }
@@ -132,7 +134,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (facingSpot == SpotType.DELIVERY)
                 {
-                    if (holdingObj == Objs.COOKED_STEAK_IN_PLATE)
+                    if (holdingObj == Objs.COOKED_STEAK_IP)
                     {
                         RemoveItemOnHands();
                     }

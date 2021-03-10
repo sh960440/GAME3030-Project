@@ -52,13 +52,13 @@ public class WorkSpot : MonoBehaviour
             case Objs.OVERCOOKED_STEAK:
                 GameObject overcookedSteak = Instantiate(items[3], itemPosition);
                 break;
-            case Objs.RAW_STEAK_IN_PLATE:
+            case Objs.RAW_STEAK_IP:
                 GameObject rawSteakPlate = Instantiate(items[4], itemPosition);
                 break;
-            case Objs.COOKED_STEAK_IN_PLATE:
+            case Objs.COOKED_STEAK_IP:
                 GameObject cookedSteakPlate = Instantiate(items[5], itemPosition);
                 break;
-            case Objs.OVERCOOKED_STEAK_IN_PLATE:
+            case Objs.OVERCOOKED_STEAK_IP:
                 GameObject overcookedSteakPlate = Instantiate(items[6], itemPosition);
                 break;
         }

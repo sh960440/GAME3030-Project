@@ -11,6 +11,7 @@ TagManager:
   - TrashBox
   - Stove
   - Meat
+  - Fries
   layers:
   - Default
   - TransparentFX
