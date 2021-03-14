@@ -34,17 +34,14 @@ public class LOS : MonoBehaviour
             case "Fryer":
                 player.facingSpotType = SpotType.FRYER;
                 break;
-            case "Microwave":
-                //player.facingSpotType = SpotType.FRIES;
-                break;
             case "Chicken":
-                //player.facingSpotType = SpotType.FRIES;
+                player.facingSpotType = SpotType.CHICKEN;
                 break;
             case "Cups":
-                //player.facingSpotType = SpotType.FRIES;
+                player.facingSpotType = SpotType.CUPS;
                 break;
             case "Drink":
-                //player.facingSpotType = SpotType.FRIES;
+                player.facingSpotType = SpotType.DRINK;
                 break;
             default:
                 break;
@@ -61,7 +58,6 @@ public class LOS : MonoBehaviour
             other.CompareTag("Meat") ||
             other.CompareTag("Fries") ||
             other.CompareTag("Fryer") ||
-            other.CompareTag("Microwave") ||
             other.CompareTag("Chicken") ||
             other.CompareTag("Cups") ||
             other.CompareTag("Drink"))

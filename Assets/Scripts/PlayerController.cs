@@ -12,7 +12,10 @@ public enum SpotType
     STOVE,
     MEAT,
     FRYER,
-    FRIES
+    FRIES,
+    CHICKEN,
+    CUPS,
+    DRINK
 }
 public class PlayerController : MonoBehaviour
 {
@@ -31,6 +34,10 @@ public class PlayerController : MonoBehaviour
     public Transform holdingPosition;
     public Item holdingItem = Item.NONE;
     [SerializeField] private GameObject[] items;
+
+    [SerializeField] AudioSource pickSound;
+    [SerializeField] AudioSource dropSound;
+    [SerializeField] AudioSource drinkSound;
     
     void Start()
     {
@@ -50,7 +57,7 @@ public class PlayerController : MonoBehaviour
             controller.Move(moveDirection * Time.deltaTime);
         }
 
-        if (Input.GetKeyDown("f"))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             // 假如手上沒東西
             if (holdingItem == Item.NONE)
@@ -67,6 +74,9 @@ public class PlayerController : MonoBehaviour
                         break;
                     case SpotType.FRIES:
                         SpawnItemOnHands(Item.RAW_FRIES);
+                        break;
+                    case SpotType.CHICKEN:
+                        SpawnItemOnHands(Item.RAW_CHICKEN);
                         break;
                     case SpotType.PLATES:
                         SpawnItemOnHands(Item.PLATE);
@@ -105,9 +115,25 @@ public class PlayerController : MonoBehaviour
                                 SpawnItemOnHands(Item.OVERCOOKED_FRIES);
                                 FindObjectOfType<FryerBehavior>().RemoveItemOnTop();
                                 break;
+                            case Item.RAW_CHICKEN:
+                                SpawnItemOnHands(Item.RAW_CHICKEN);
+                                FindObjectOfType<FryerBehavior>().RemoveItemOnTop();
+                                break;
+                            case Item.COOKED_CHICKEN:
+                                SpawnItemOnHands(Item.COOKED_CHICKEN);
+                                FindObjectOfType<FryerBehavior>().RemoveItemOnTop();
+                                break;
+                            case Item.OVERCOOKED_CHICKEN:
+                                SpawnItemOnHands(Item.OVERCOOKED_CHICKEN);
+                                FindObjectOfType<FryerBehavior>().RemoveItemOnTop();
+                                break;
                         }
                         break;
+                    case SpotType.CUPS:
+                        SpawnItemOnHands(Item.CUP);
+                        break;
                 }
+                pickSound.Play();
             }
             // 假如手上有東西
             else
@@ -115,10 +141,9 @@ public class PlayerController : MonoBehaviour
                 switch (facingSpotType)
                 {
                     case SpotType.WORKAREA:
-                        if (workSpot.itemOnSpot == Item.PLATE && (holdingItem == Item.RAW_STEAK || holdingItem == Item.COOKED_STEAK || holdingItem == Item.OVERCOOKED_STEAK || holdingItem == Item.RAW_FRIES || holdingItem == Item.COOKED_FRIES || holdingItem == Item.OVERCOOKED_FRIES))
+                        if (workSpot.itemOnSpot == Item.PLATE && (holdingItem == Item.RAW_STEAK || holdingItem == Item.COOKED_STEAK || holdingItem == Item.OVERCOOKED_STEAK || holdingItem == Item.RAW_FRIES || holdingItem == Item.COOKED_FRIES || holdingItem == Item.OVERCOOKED_FRIES || holdingItem == Item.RAW_CHICKEN || holdingItem == Item.COOKED_CHICKEN || holdingItem == Item.OVERCOOKED_CHICKEN))
                         {
                             workSpot.RemoveItemOnTop();
-                            Debug.Log("Both cleaned");
                             switch (holdingItem)
                             {
                                 case Item.RAW_STEAK:
@@ -139,15 +164,26 @@ public class PlayerController : MonoBehaviour
                                 case Item.OVERCOOKED_FRIES:
                                     workSpot.SpawnObj(Item.OVERCOOKED_FRIES_IP);
                                     break;
+                                case Item.RAW_CHICKEN:
+                                    workSpot.SpawnObj(Item.RAW_CHICKEN_IP);
+                                    break;
+                                case Item.COOKED_CHICKEN:
+                                    workSpot.SpawnObj(Item.COOKED_CHICKEN_IP);
+                                    break;
+                                case Item.OVERCOOKED_CHICKEN:
+                                    workSpot.SpawnObj(Item.OVERCOOKED_CHICKEN_IP);
+                                    break;
                                 default:
                                     break;
                             }
                             RemoveItemOnHands();
+                            dropSound.Play();
                         }
                         else if (workSpot.itemOnSpot == Item.NONE)
                         {
                             workSpot.SpawnObj(holdingItem);
                             RemoveItemOnHands();
+                            dropSound.Play();
                         }
                         break;
 
@@ -158,6 +194,7 @@ public class PlayerController : MonoBehaviour
                             {
                                 RemoveItemOnHands();
                                 FindObjectOfType<StoveBehavior>().StartCoroutine("StartCookingRawSteak");
+                                dropSound.Play();
                             }
                         }
                         break;
@@ -165,18 +202,32 @@ public class PlayerController : MonoBehaviour
                     case SpotType.FRYER:
                         if (FindObjectOfType<FryerBehavior>().itemOnFryer == Item.NONE)
                         {
-                            if (holdingItem == Item.RAW_FRIES || holdingItem == Item.COOKED_FRIES || holdingItem == Item.OVERCOOKED_FRIES)
+                            if (holdingItem == Item.RAW_FRIES || holdingItem == Item.COOKED_FRIES)
                             {
                                 RemoveItemOnHands();
                                 FindObjectOfType<FryerBehavior>().StartCoroutine("StartCookingRawFries");
+                                dropSound.Play();
+                            }
+                            else if (holdingItem == Item.RAW_CHICKEN || holdingItem == Item.COOKED_CHICKEN)
+                            {
+                                RemoveItemOnHands();
+                                FindObjectOfType<FryerBehavior>().StartCoroutine("StartCookingRawChicken");
+                                dropSound.Play();
                             }
                         }
                         break;
 
                     case SpotType.DELIVERY:
-                        if (holdingItem == Item.COOKED_STEAK_IP || holdingItem == Item.COOKED_FRIES_IP)
+                        GameManager.Instance.DelieverFood(holdingItem);
+                        RemoveItemOnHands();
+                        break;
+
+                    case SpotType.DRINK:
+                        if (holdingItem == Item.CUP)
                         {
                             RemoveItemOnHands();
+                            SpawnItemOnHands(Item.DRINK);
+                            drinkSound.Play();
                         }
                         break;
 
@@ -184,6 +235,7 @@ public class PlayerController : MonoBehaviour
                         if (holdingItem != Item.NONE)
                         {
                             RemoveItemOnHands();
+                            dropSound.Play();
                         }
                         break;
                 }

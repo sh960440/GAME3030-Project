@@ -83,7 +83,10 @@ MonoBehaviour:
   - {fileID: 7981170868454165132, guid: 899101f339e594e47a082e20fe638e21, type: 3}
   - {fileID: 1000012400448258, guid: 9b21be590f33e0d4ba19fec73ce555da, type: 3}
   - {fileID: 6200911745086626293, guid: 11d4aa1ea7399004abc44bb86cb49462, type: 3}
-  itemOnFryer: 13
+  - {fileID: 2868529856462603090, guid: 0cdf99d0ee7a67b449832ac13ac5e82b, type: 3}
+  - {fileID: 1000010917563242, guid: 6e2574af69e1ddd4497a11adb45777a1, type: 3}
+  - {fileID: 4265656990056550405, guid: 0af3185a808b32e4e9a13d2aac408e5b, type: 3}
+  itemOnFryer: 19
 --- !u!33 &1865455641215348037
 MeshFilter:
   m_ObjectHideFlags: 0

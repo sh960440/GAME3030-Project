@@ -11,7 +11,6 @@ public class FryerBehavior : MonoBehaviour
     
     public IEnumerator StartCookingRawFries()
     {
-        Debug.Log("Start Cooking");
         GameObject rawFries = Instantiate(items[0], itemPosition);
         itemOnFryer = Item.RAW_FRIES;
         yield return new WaitForSeconds(3.0f);
@@ -22,12 +21,32 @@ public class FryerBehavior : MonoBehaviour
         StartCoroutine("CookedFriesTimer");
     }
 
+    public IEnumerator StartCookingRawChicken()
+    {
+        GameObject rawChicken = Instantiate(items[3], itemPosition);
+        itemOnFryer = Item.RAW_CHICKEN;
+        yield return new WaitForSeconds(3.0f);
+        RemoveItemOnTop();
+        GameObject cookedChicken = Instantiate(items[4], itemPosition);
+        itemOnFryer = Item.COOKED_CHICKEN;
+
+        StartCoroutine("CookedChickenTimer");
+    }
+
     public IEnumerator CookedFriesTimer()
     {
         yield return new WaitForSeconds(5.0f);
         RemoveItemOnTop();
         GameObject overcookedFries = Instantiate(items[2], itemPosition);
         itemOnFryer = Item.OVERCOOKED_FRIES;
+    }
+
+    public IEnumerator CookedChickenTimer()
+    {
+        yield return new WaitForSeconds(5.0f);
+        RemoveItemOnTop();
+        GameObject overcookedChicken = Instantiate(items[5], itemPosition);
+        itemOnFryer = Item.OVERCOOKED_CHICKEN;
     }
 
     public void RemoveItemOnTop()

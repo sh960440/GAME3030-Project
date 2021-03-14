@@ -125,7 +125,15 @@ MonoBehaviour:
   - {fileID: 363841076705983103, guid: f0bfbbf60812a3141884a7e37d64725c, type: 3}
   - {fileID: 7229945131845354379, guid: 8b7860be058cfc94297d5909546ea781, type: 3}
   - {fileID: 2626736309320946981, guid: 84f0a0f13af8b86489b5f4db636a271b, type: 3}
-  itemOnSpot: 13
+  - {fileID: 2868529856462603090, guid: 0cdf99d0ee7a67b449832ac13ac5e82b, type: 3}
+  - {fileID: 1000010917563242, guid: 6e2574af69e1ddd4497a11adb45777a1, type: 3}
+  - {fileID: 4265656990056550405, guid: 0af3185a808b32e4e9a13d2aac408e5b, type: 3}
+  - {fileID: 2989166276104532115, guid: 88a50d75ca834544dac38170f2c6a593, type: 3}
+  - {fileID: 1020616395118662466, guid: ca5c4bf879caf4d4eb49e9d2ca31353d, type: 3}
+  - {fileID: 8702735526283381260, guid: 5ade1c512cf2601479e388b2a4b1b235, type: 3}
+  - {fileID: 5083625853688807158, guid: 02b8dcfc8519d174681e10e50aecdcaa, type: 3}
+  - {fileID: 1000011827300634, guid: ff586fe8e17ca3a4d9669e3c824a0e29, type: 3}
+  itemOnSpot: 21
   originalMaterial: {fileID: 0}
   brightMaterial: {fileID: 2100000, guid: a86b31eaf9e90aa469dc3fd51f7ef1d4, type: 2}
 --- !u!1 &8452218962962877385
