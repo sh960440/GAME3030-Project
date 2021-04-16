@@ -7,16 +7,18 @@ public class AnnoyingGuy : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private GameObject player;
+    [SerializeField] private Animator animator;
 
-    public IEnumerator Break()
-    {
-        yield return new WaitForSeconds(5.0f);
-        ChasePlayer();
-    }
-
-    public void ChasePlayer()
+    void Update()
     {
         agent.SetDestination(player.transform.position);
-        StartCoroutine(Break());
+        if (agent.remainingDistance <= 2)
+        {
+            animator.SetBool("Walk", false);
+        }
+        else
+        {
+            animator.SetBool("Walk", true);
+        }
     }
 }

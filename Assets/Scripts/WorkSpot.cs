@@ -14,6 +14,7 @@ public class WorkSpot : MonoBehaviour
     void Start()
     {
         itemOnSpot = Item.NONE;
+        player = FindObjectOfType<PlayerController>();
         originalMaterial = GetComponent<MeshRenderer>().material;
     }
 

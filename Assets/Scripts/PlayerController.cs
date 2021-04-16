@@ -38,12 +38,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioSource pickSound;
     [SerializeField] AudioSource dropSound;
     [SerializeField] AudioSource drinkSound;
-    
+
+    private Animator animator;
+
     void Start()
     {
         holdingItem = Item.NONE;
         facingSpotType = SpotType.NONE;
         controller = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -55,10 +58,18 @@ public class PlayerController : MonoBehaviour
             destRot = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, destRot, rotStep);
             controller.Move(moveDirection * Time.deltaTime);
+            animator.SetBool("Walk", true);
+        }
+        else
+        {
+            animator.SetBool("Walk", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.JoystickButton0))
         {
+            if (facingSpotType == SpotType.WORKAREA && workSpot.itemOnSpot == Item.NONE && holdingItem == Item.NONE) return;
+            if (facingSpotType != SpotType.NONE)
+                pickSound.Play();
             // 假如手上沒東西
             if (holdingItem == Item.NONE)
             {
@@ -66,8 +77,11 @@ public class PlayerController : MonoBehaviour
                 switch (facingSpotType)
                 {
                     case SpotType.WORKAREA:
-                        SpawnItemOnHands(workSpot.itemOnSpot);
-                        workSpot.RemoveItemOnTop();
+                        if (workSpot.itemOnSpot != Item.NONE)
+                        {
+                            SpawnItemOnHands(workSpot.itemOnSpot);
+                            workSpot.RemoveItemOnTop();
+                        }
                         break;
                     case SpotType.MEAT:
                         SpawnItemOnHands(Item.RAW_STEAK);
@@ -133,7 +147,6 @@ public class PlayerController : MonoBehaviour
                         SpawnItemOnHands(Item.CUP);
                         break;
                 }
-                pickSound.Play();
             }
             // 假如手上有東西
             else
@@ -192,8 +205,8 @@ public class PlayerController : MonoBehaviour
                         {
                             if (holdingItem == Item.RAW_STEAK || holdingItem == Item.COOKED_STEAK || holdingItem == Item.OVERCOOKED_STEAK)
                             {
+                                FindObjectOfType<StoveBehavior>().DropSteak(holdingItem);
                                 RemoveItemOnHands();
-                                FindObjectOfType<StoveBehavior>().StartCoroutine("StartCookingRawSteak");
                                 dropSound.Play();
                             }
                         }
@@ -202,16 +215,10 @@ public class PlayerController : MonoBehaviour
                     case SpotType.FRYER:
                         if (FindObjectOfType<FryerBehavior>().itemOnFryer == Item.NONE)
                         {
-                            if (holdingItem == Item.RAW_FRIES || holdingItem == Item.COOKED_FRIES)
+                            if (holdingItem == Item.RAW_FRIES || holdingItem == Item.COOKED_FRIES || holdingItem == Item.RAW_CHICKEN || holdingItem == Item.COOKED_CHICKEN || holdingItem == Item.OVERCOOKED_FRIES || holdingItem == Item.OVERCOOKED_CHICKEN)
                             {
+                                FindObjectOfType<FryerBehavior>().DropIngredient(holdingItem);
                                 RemoveItemOnHands();
-                                FindObjectOfType<FryerBehavior>().StartCoroutine("StartCookingRawFries");
-                                dropSound.Play();
-                            }
-                            else if (holdingItem == Item.RAW_CHICKEN || holdingItem == Item.COOKED_CHICKEN)
-                            {
-                                RemoveItemOnHands();
-                                FindObjectOfType<FryerBehavior>().StartCoroutine("StartCookingRawChicken");
                                 dropSound.Play();
                             }
                         }

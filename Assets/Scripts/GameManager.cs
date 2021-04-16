@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class GameManager : MonoBehaviour
     public Text timerText;
     public GameObject gameoverScreen;
     public GameObject pauseScreen;
+    public GameObject gameoverFirstButton;
+    public GameObject pauseFirstButton;
+    public GameObject tips;
     public Text totalIncome;
     public float timer;
     public int income = 0;
@@ -60,17 +64,24 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             gameoverScreen.SetActive(true);
             totalIncome.text = income.ToString();
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(gameoverFirstButton);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.JoystickButton2))
         {
             Pause();
+        }
+
+        if (Input.GetKeyDown(KeyCode.JoystickButton3) || Input.GetKeyDown(KeyCode.Tab))
+        {
+            tips.SetActive(!tips.activeSelf);
         }
     }
 
     IEnumerator AcceptOrder()
     {
-        yield return new WaitForSeconds(20.0f);
+        yield return new WaitForSeconds(Random.Range(12.0f, 14.0f));
         if (FullOrder() <= 5)
         {
             int UIIndex = FullOrder();
@@ -98,13 +109,87 @@ public class GameManager : MonoBehaviour
     public void DelieverFood(Item dish)
     {
         bool match = false;
+        List<Order> sameOrders = new List<Order>();
 
         for (int i = 0; i < 5; i++)
         {
             if (orders[i].gameObject.activeSelf == true && orders[i].desiredDish == dish)
             {
+                sameOrders.Add((orders[i]));
+            }
+        }
+
+        if (sameOrders.Count > 0)
+        {
+            match = true;
+            
+            Order sendingOrder = sameOrders[0];
+            foreach(Order order in sameOrders)
+            {
+                if (order.remainingTime < sendingOrder.remainingTime)
+                {
+                    sendingOrder = order;
+                }
+            }
+
+            sendingOrder.Reset();
+            sendingOrder.gameObject.SetActive(false);
+
+            switch (dish)
+            {
+                case Item.COOKED_STEAK_IP:
+                    IncomeChange(200);
+                    break;
+                case Item.COOKED_CHICKEN_IP:
+                    IncomeChange(160);
+                    break;
+                case Item.COOKED_FRIES_IP:
+                    IncomeChange(120);
+                    break;
+                case Item.DRINK:
+                    IncomeChange(80);
+                    break;
+            }
+        }
+
+        if (match)
+        {
+            GetComponent<AudioSource>().Play();
+            incomeText.gameObject.GetComponent<Animator>().SetTrigger("Earn");
+        }
+        else
+        {
+            incomeText.gameObject.GetComponent<Animator>().SetTrigger("Lose");
+            IncomeChange(-50);
+        }
+    }
+
+    /*
+    public void DelieverFood(Item dish)
+    {
+        bool match = false;
+
+        for (int i = 0; i < 5; i++)
+        {
+            Order[] sameOrders;
+            if (orders[i].gameObject.activeSelf == true && orders[i].desiredDish == dish)
+            {
                 match = true;
-                IncomeChange(100);
+                switch (dish)
+                {
+                    case Item.COOKED_STEAK_IP:
+                        IncomeChange(200);
+                        break;
+                    case Item.COOKED_CHICKEN_IP:
+                        IncomeChange(160);
+                        break;
+                    case Item.COOKED_FRIES_IP:
+                        IncomeChange(120);
+                        break;
+                    case Item.DRINK:
+                        IncomeChange(80);
+                        break;
+                }
                 orders[i].Reset();
                 orders[i].gameObject.SetActive(false);
                 break;
@@ -122,6 +207,7 @@ public class GameManager : MonoBehaviour
             IncomeChange(-50);
         }
     }
+    */
 
     void IncomeChange(int amount)
     {
@@ -135,7 +221,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(60.0f);
 
         ai.SetActive(true);
-        ai.GetComponent<AnnoyingGuy>().ChasePlayer();
     }
 
     public void NewGame()
@@ -155,6 +240,8 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         pauseScreen.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(pauseFirstButton);
     }
 
     public void Replay()
@@ -168,6 +255,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         pauseScreen.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void Quit()
